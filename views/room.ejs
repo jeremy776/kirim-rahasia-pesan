@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berikan komentar tentang <%- userData.name %>
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.45.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-gray-900 min-h-[100vh]">
+    <div class="navbar dark:bg-gray-800 bg-white">
+        <div class="navbar-start">
+            <!-- Desktop -->
+            <div class="hidden lg:block p-4">
+                <div class="text-gray-600 text-md normal-case font-semibold flex gap-4">
+                    <a>Home</a>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-center">
+            <a class="btn btn-ghost normal-case text-xl">Kirasan</a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-circle">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+            <button class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div class="justify-center flex-col items-center flex">
+        
+        <div class="p-6 dark:bg-gray-800 bg-white mt-4 rounded w-[100%] max-w-5xl">
+            <% if(isAuthor) { %>
+                <h1 class="text-xl dark:text-gray-200 text-gray-700 p-2 font-semibold text-center">Jadikan ini sebagai
+                    status Whatsapp /
+                    Instagram Anda.</h1>
+                <div class="flex justify-center gap-4  mt-5">
+                    <div class="max-w-xl w-full">
+                        <input id="link"
+                            class="text-gray-600 dark:text-gray-400 pointer-events-none cursor-not-allowed select-none dark:bg-gray-700 bg-slate-50 input w-full"
+                            value="<%- req.host == 'localhost' ? 'http' : 'https'%>://<%- req.headers.host %>/<%- userData.id %>" />
+                    </div>
+                    <div onclick="processCopy()" style="color: white;" data-tooltip-target="copy"
+                        class="btn bg-indigo-500 hover:bg-indigo-600 btn-ghost text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 bi bi-paperclip"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+                        </svg>
+                    </div>
+                    <div id="copy" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-600">
+                        Copy Link
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <% } else { %>
+                    <div>
+                        <h1 class="text-xl dark:text-gray-200 text-gray-700 p-2 text-center">Berikan pesan rahasia
+                            kepada <b>
+                                <%- userData.name %>
+                            </b></p>
+                            <div class="mt-4 w-full justify-center flex">
+                                <form method="post" action="/comment/<%- userData.id %>"
+                                    class="w-full max-w-2xl flex gap-4">
+                                    <input required name="pesan" autocomplete="off" placeholder="Masukan pesan"
+                                        class="text-gray-600 dark:text-gray-400 dark:bg-gray-700 bg-slate-50 input w-full" />
+                                    <input type="hidden" id="csrf" name="_csrf" value="<%- csrfToken %>">
+                                    <button type="submit"
+                                        class="btn hover:bg-indigo-500 btn-ghost bg-indigo-400 text-white">Kirim</button>
+                                </form>
+                            </div>
+                    </div>
+                    <% } %>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 p-6 mt-4 rounded w-[100%] max-w-5xl">
+            <h1 class="text-xl dark:text-gray-200 text-gray-700 mb-4 font-bold">
+                <%- isAuthor ? "Daftar Pesan" : `Daftar Pesan ${userData.name}`%>
+            </h1>
+
+            <% userData.komentar.map((x,i)=> { %>
+                <div class="bg-slate-50 dark:bg-gray-700 py-2 px-4 rounded-md mt-2">
+                    <div>
+                        <div>
+                            <h1 class="font-bold text-sm dark:text-gray-200 text-gray-500">Anosen</h1>
+                            <p class="text-md dark:text-gray-400 text-gray-600"><%- x.pesan %></p>
+                        </div>
+                        <div class="flex gap-2 mt text-sm text-gray-400">
+                            <% let date = new Date(x.tanggal) %>
+                            <p>
+                                <%- date.getDay() %>/<%- date.getMonth()+1 %>/<%- date.getFullYear() %>
+                            </p>
+                            <!-- <p>•</p> -->
+                            <!-- <p data-modal-target="test-<%-i%>" data-modal-toggle="test-<%-i%>"
+                                class="text-indigo-400 select-none hover:text-indigo-500">Balas komentar</p> -->
+                        </div>
+                    </div>
+                </div>
+                <div id="test-<%-i%>" tabindex="-1"
+                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                    <div class="relative w-full h-full max-w-md md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <!-- Modal header -->
+                            <div class="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
+                                <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                                    Balas Komentar
+                                </h3>
+                                <button type="button"
+                                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    data-modal-hide="test-<%-i%>">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <form action="/reply-comment/<%-userData.id%>/<%-i%>" method="post">
+                                <div class="p-6 space-y-6">
+                                    <div class="flex flex-col gap-2">
+                                        <p class="dark:text-gray-200">Membalas pesan:</p>
+                                        <input value="<%- x.pesan %>"
+                                            class="text-gray-600 dark:text-gray-400 pointer-events-none cursor-not-allowed select-none dark:bg-gray-800 bg-slate-50 input w-full" />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <p class="dark:text-gray-200">Bales komentar:</p>
+                                        <input type="hidden" id="csrf" name="_csrf" value="<%- csrfToken %>">
+                                        <input id="reply-comment" name="pesan"
+                                            class="text-gray-600 dark:text-gray-400 dark:bg-gray-800 bg-slate-50 input w-full" />
+                                    </div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div
+                                    class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                    <button
+                                        type="submit"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kirim</button>
+                                    <button data-modal-hide="test-<%-i%>" type="button"
+                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Gak
+                                        jadi bales</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <% }) %>
+        </div>
+    </div>
+
+    <!-- notif -->
+    <div id="notif">
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.1/flowbite.min.js"></script>
+<script src="https://kit.fontawesome.com/27c7900ece.js" crossorigin="anonymous"></script>
+<script src="/reload/reload.js"></script>
+<script src="/room.script.js"></script>
+
+</html>

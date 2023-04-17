@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirasan - Kirim Rahasia Pesan</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.45.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 dark:bg-gray-900 min-h-[100vh]">
+    <div class="navbar dark:bg-gray-800 bg-white">
+        <div class="navbar-start">
+            <!-- Desktop -->
+            <div class="hidden lg:block p-4">
+                <div class="text-gray-600 dark:text-gray-400 text-md normal-case font-semibold flex gap-4">
+                    <a>Home</a>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-center">
+            <a class="btn btn-ghost normal-case text-xl dark:text-white">Kirasan</a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-ghost btn-circle">
+                <div class="indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div class="justify-center flex-col items-center flex pb-20">
+        <div class="p-6 dark:bg-gray-800 dark:shadow-md bg-white mt-4 md:rounded w-[100%] max-w-5xl">
+            <h1 class="font-bold dark:text-gray-200 text-gray-700 text-xl">Lihat.. pesan apa yang mereka kirim.</h1>
+            <div class="dark:text-gray-400 text-gray-500">
+                <p>Buat link nya sekarang, trus bagiin ke teman teman mu untuk mendapatkan komentar/balasan dari teman
+                    teman mu. yang pastinya kamu sendiri gak akan tau siapa yang memberikan komentar itu</p>
+            </div>
+            <form method="post" action="/new-link" class="mt-6 flex flex-col gap-4">
+                <input type="text" placeholder="Nama kamu" name='nama' required
+                    class="input dark:bg-gray-900 bg-slate-50 w-full md:max-w-md" autocomplete="off" />
+                <input type="hidden" name="_csrf" value="<%- csrfToken %>">
+                <button class="btn bg-indigo-400 btn-ghost text-white md:max-w-[150px]">Buat sekarang</button>
+            </form>
+        </div>
+        <div class="dark:bg-gray-800 dark:shadow-md bg-white md:rounded max-w-5xl w-[100%] mt-4 p-6 text-gray-600">
+            <h1 class="text-2xl dark:text-gray-200 font-bold text-gray-700">Disclaimer</h1>
+            <p class="dark:text-gray-400">This website is solely for fun and its concept is completely based on an
+                already existing website called secreto (<a href='https://secreto.site/'
+                    class="hover:underline-offset-1 hover:underline text-indigo-500" target="_blank">secreto.site</a>)
+            </p>
+        </div>
+        <div class="dark:bg-gray-800 dark:shadow-md md:rounded bg-white max-w-5xl w-[100%] mt-4 p-6 text-gray-600">
+            <h1 class="text-2xl dark:text-gray-200 font-bold text-gray-700">Penjelasan</h1>
+            <p class="mt-2 dark:text-gray-400">Kirasan adalah sebuah website yang memungkinkan para creator dapat
+                membuat tempat agar teman teman dari creator bisa mengirimkan sebuah pesan, komentar, dan juga kritik
+                tanpa diketahui oleh creator.</p><br />
+            <p class="dark:text-gray-400">Pada website ini, pengguna yang mengirim pesan dapat disebut sebagai
+                <b>Anosen</b> (Anonymous Sender), dan orang yang membuat room atau link disebut sebagai
+                <b>creator/author</b>.
+            </p>
+            <p class="dark:text-gray-400">Para Anosen disini bebas berkomentar tanpa diketahui oleh creator.</p>
+        </div>
+    </div>
+</body>
+<script>eruda.init();</script>
+<script src="/reload/reload.js"></script>
+
+</html>
