@@ -1,0 +1,25 @@
+{
+  "name": "kirasan",
+  "version": "0.0.1-beta",
+  "description": "Kirasan (Kirim Rahasia Pesan) terinspirasi dari secreto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js -e ejs,js,css,html",
+    "start": " node server.js"
+  },
+  "author": "Anrekus",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "livereload": "^0.9.3",
+    "mongoose": "^6.8.1",
+    "nodemon": "^2.0.20",
+    "reload": "^3.2.0"
+  }
+}
